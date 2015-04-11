@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>地搜倒计时功能</title>
+</head>
+<body>
+	<h1>地搜倒计时(已知截止时间)</h1>
+	<div id="time"></div>
+
+<script type="text/javascript">
+	//方法1：使用setInterval实现
+	function test(element, endTimeStr) {//element为dom节点，endTimeStr表示截止时间字符窜
+		if (typeof endTimeStr != 'string') return;
+
+		var timer = null;
+		var TIME = new Date(endTimeStr).getTime();
+		var currentTime, t, total, h, m, s;
+
+		timer = setInterval(function(){
+			currentTime = new Date().getTime();
+			t = TIME - currentTime;
+			total = Math.floor(t/1000); //总秒数
+			h = Math.floor(total/3600);
+			m = Math.floor(total%3600/60);
+			s = Math.floor(total%60);
+			h = h < 10 ? "0"+h : h;
+			m = m < 10 ? "0"+m : m;
+			s = s < 10 ? "0"+s : s;
+
+			element.innerHTML = (h+":"+m+":"+s);
+
+			if(t<=0) {
+				clearInterval(timer);
+				element.innerHTML = "地搜已结束！";
+			}
+
+		}, 1000);
+		
+	}
+
+
+	//方法2：使用setTimeout实现
+	// function test(element, endTimeStr) {//element为dom节点，endTimeStr表示截止时间字符窜
+	// 	if (typeof endTimeStr != 'string') return;
+	// 	var timer = null;
+	// 	var TIME = new Date(endTimeStr).getTime();
+	// 	var currentTime, t, total, h, m, s;
+
+	// 	function time() {
+	// 		currentTime = new Date().getTime();
+	// 		t = TIME - currentTime;
+	// 		total = Math.floor(t/1000); //总秒数
+	// 		h = Math.floor(total/3600);
+	// 		m = Math.floor(total%3600/60);
+	// 		s = Math.floor(total%60);
+	// 		h = h < 10 ? "0"+h : h;
+	// 		m = m < 10 ? "0"+m : m;
+	// 		s = s < 10 ? "0"+s : s;
+
+	// 		element.innerHTML = (h+":"+m+":"+s);
+
+	// 		timer = setTimeout(time, 1000);
+
+	// 		if(t<=0) {
+	// 			clearTimeout(timer);
+	// 			element.innerHTML = "地搜已结束！";
+	// 		}
+	// 	}
+
+	// 	time();
+		
+	// }
+
+	// test(document.getElementById("time"), '2015');
+	test(document.getElementById("time"), "2015/04/11 23:55:50");
+
+</script>
+</body>
+</html>
